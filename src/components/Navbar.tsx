@@ -1,7 +1,7 @@
 export default function Navbar() {
 
     return (
-        <nav>
+        <nav className="navbar">
             <h1>The User Blog</h1>
             <div className="links">
                 <a href="/">Home</a>
