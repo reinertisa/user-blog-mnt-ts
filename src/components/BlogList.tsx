@@ -20,5 +20,4 @@ export default function BlogList({blogs, title, handleDelete}: BlogListProps) {
             ))}
         </div>
     )
-
 }
