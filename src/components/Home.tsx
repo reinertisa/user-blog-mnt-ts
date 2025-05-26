@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import {useEffect, useState} from 'react';
 import BlogList from "./BlogList.tsx";
 
 export type Blog = {
@@ -9,18 +9,25 @@ export type Blog = {
 }
 
 export default function Home() {
+    const [blogs, setBlogs] = useState<Blog[] | null>(null)
 
-    const [blogs, setBlogs] = useState<Blog[]>([
-        {title: 'First Blog', body: 'Hey how are you?', author: 'Isa', id: 1},
-        {title: 'Second Blog', body: 'How old are you?', author: 'Sade', id: 2},
-        {title: 'Third Blog', body: 'Where do you come from?', author: 'Kristi', id: 3},
-    ])
+    useEffect(() => {
+        const loadData = async () => {
+            try {
+                const rez = await fetch('http://localhost:8000/blogs')
+                const data = await rez.json();
+                setBlogs(data);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        void loadData();
+    }, [])
 
-    const handleDelete = (id: number) => setBlogs(blogs.filter(blog => blog.id !== id));
 
     return (
         <div className="home">
-            <BlogList blogs={blogs} title="All Blogs" handleDelete={handleDelete} />
+            {blogs && <BlogList blogs={blogs} title="All Blogs" />}
         </div>
     )
 }
