@@ -1,11 +1,13 @@
+import {NavLink} from "react-router";
+
 export default function Navbar() {
 
     return (
         <nav className="navbar">
             <h1>The User Blog</h1>
             <div className="links">
-                <a href="/">Home</a>
-                <a href="/create">New Blog</a>
+                <NavLink to="/">Home</NavLink>
+                <NavLink to="/create">New Blog</NavLink>
             </div>
         </nav>
     )
