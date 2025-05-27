@@ -1,4 +1,5 @@
-import type {Blog} from "./Home.tsx";
+import type {Blog} from "./index.tsx";
+import {Link} from "react-router";
 
 type BlogListProps = {
     blogs: Blog[],
@@ -12,8 +13,10 @@ export default function BlogList({blogs, title}: BlogListProps) {
             <h2>{title}</h2>
             {blogs.map(blog => (
                 <div className="blog-preview" key={blog.id}>
-                    <h2>{blog.title}</h2>
-                    <p>Written by {blog.author}</p>
+                    <Link to={`/blog/${blog.id}`}>
+                        <h2>{blog.title}</h2>
+                        <p>Written by {blog.author}</p>
+                    </Link>
                 </div>
             ))}
         </div>
