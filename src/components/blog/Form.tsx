@@ -1,4 +1,5 @@
 import React, {useState} from 'react';
+import {useNavigate} from "react-router";
 
 export default function BlogForm() {
     const [title, setTitle] = useState<string>('');
@@ -6,6 +7,7 @@ export default function BlogForm() {
     const [author, setAuthor] = useState<string>('sade');
     const [isPending, setIsPending] = useState<boolean>(false);
     const [error, setError] = useState<string | null>(null);
+    const navigate = useNavigate();
 
     const handleTitleChange =
         (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
@@ -19,14 +21,15 @@ export default function BlogForm() {
         const blog = {title, body, author};
         try {
             setIsPending(true);
-            const rez = await fetch('http://localhost:8000/blogs', {
+            await fetch('http://localhost:8000/blogs', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(blog)
             })
-           setIsPending(false);
+            setIsPending(false);
+            navigate('/');
         } catch (err) {
             if (err instanceof Error) {
                 setError(err.message);
