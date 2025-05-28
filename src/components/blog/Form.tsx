@@ -4,6 +4,8 @@ export default function BlogForm() {
     const [title, setTitle] = useState<string>('');
     const [body, setBody] = useState<string>('');
     const [author, setAuthor] = useState<string>('sade');
+    const [isPending, setIsPending] = useState<boolean>(false);
+    const [error, setError] = useState<string | null>(null);
 
     const handleTitleChange =
         (e: React.ChangeEvent<HTMLInputElement>) => setTitle(e.target.value);
@@ -15,7 +17,23 @@ export default function BlogForm() {
     const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const blog = {title, body, author};
-        console.log(blog);
+        try {
+            setIsPending(true);
+            const rez = await fetch('http://localhost:8000/blogs', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(blog)
+            })
+           setIsPending(false);
+        } catch (err) {
+            if (err instanceof Error) {
+                setError(err.message);
+            } else {
+                setError("An unexpected error occurred");
+            }
+        }
     }
 
     return (
@@ -45,8 +63,9 @@ export default function BlogForm() {
                     <option value="kristi">Kristi</option>
                     <option value="isa">Isa</option>
                 </select>
-                <button type="submit">Add Blog</button>
+                <button type="submit" disabled={isPending}>{isPending ? 'Adding blog...' : 'Add Blog'}</button>
             </form>
+            {error && <div>{error}</div>}
         </div>
     )
 }
