@@ -12,10 +12,16 @@ export default function BlogForm() {
     const handleAuthorChange =
         (e: React.ChangeEvent<HTMLSelectElement>) => setAuthor(e.target.value);
 
+    const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        const blog = {title, body, author};
+        console.log(blog);
+    }
+
     return (
         <div className="create">
             <h2>Add a New Blog</h2>
-            <form>
+            <form onSubmit={onSubmit}>
                 <label htmlFor="title">Blog title:</label>
                 <input
                     id="title"
