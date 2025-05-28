@@ -5,8 +5,7 @@ import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} fr
 import BlogForm from "./components/blog/Form.tsx";
 import BlogPage from "./components/blog";
 import BlogDetails from "./components/blog/Details.tsx";
-
-
+import NotFound from "./components/NotFound.tsx";
 
 const router = createBrowserRouter(createRoutesFromElements(
     <Route path="/" element={<App />}>
@@ -14,6 +13,7 @@ const router = createBrowserRouter(createRoutesFromElements(
         <Route path="home" element={<BlogPage />} />
         <Route path="create" element={<BlogForm />} />
         <Route path="blog/:id" element={<BlogDetails />} />
+        <Route path="*" element={<NotFound />} />
     </Route>,
 ));
 
